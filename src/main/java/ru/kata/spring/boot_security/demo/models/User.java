@@ -4,12 +4,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User implements UserDetails {
 
     @Id
@@ -17,18 +21,25 @@ public class User implements UserDetails {
     @Column(name = "id")
     private Long id;
 
+    @NotEmpty(message = "User should not be empty")
+    @Size(min = 1, max = 30, message = "First name should be between 1 and 30 characters")
     @Column(name = "first_name")
     private String firstName;
 
+    @Size(min = 1, max = 30, message = "Last name should be between 1 and 30 characters")
     @Column(name = "last_name")
     private String lastName;
 
+    @Min(value = 0, message = "Age should be greater than zero")
     @Column(name = "age")
     private Integer age;
 
+    @NotEmpty(message = "Email should not be empty")
+    @Email
     @Column(name = "email")
     private String email;
 
+    @NotEmpty(message = "Role should not be empty")
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
@@ -37,6 +48,7 @@ public class User implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
+    @NotEmpty(message = "Password should not be empty")
     @Column(name = "password")
     private String password;
 

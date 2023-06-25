@@ -154,16 +154,18 @@
                                                                         <select class="form-control" id="roleEdit"
                                                                                 name="roles" size="2" multiple>
                                                                             <option th:each="role : ${allRoles}"
-                                                                                    th:selected="${user.roles
+                                                                                    th:selected="${user.getRoles()
                                                                                     .contains(role)}"
                                                                                     th:value="${role.getId}"
-                                                                                    th:text="${role}">
+                                                                                    th:text="${role.toString()
+                                                                                    .replaceAll('ROLE_', ' ')}">
                                                                             </option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary"
-                                                                                data-dismiss="modal">Close</button>
+                                                                                data-dismiss="modal">Close
+                                                                        </button>
                                                                         <button type="submit" class="btn btn-info">
                                                                             Edit
                                                                         </button>
@@ -248,7 +250,8 @@
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary"
-                                                                                data-dismiss="modal">Close</button>
+                                                                                data-dismiss="modal">Close
+                                                                        </button>
                                                                         <button type="submit"
                                                                                 class="btn btn-danger">Delete
                                                                         </button>
@@ -275,7 +278,7 @@
                                 </div>
                                 <div class="card-body text-center">
                                     <div class="container-fluid col-md-4 text-center">
-                                        <form th:method="POST" th:action="@{/admin/new}">
+                                        <form th:method="POST" th:action="@{/admin}">
                                             <div class="form-group">
                                                 <label class="control-label font-weight-bold" for="firstName">First name
                                                 </label>
@@ -305,7 +308,7 @@
                                                         multiple>
                                                     <option th:each="role : ${allRoles}"
                                                             th:value="${role.getId}"
-                                                            th:text="${role.toString}">
+                                                            th:text="${role.toString.replaceAll('ROLE_', ' ')}">
                                                     </option>
                                                 </select>
                                             </div>
